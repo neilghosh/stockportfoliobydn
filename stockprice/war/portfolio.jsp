@@ -10,6 +10,7 @@
 <html>
   <body>
 <!--  added by deepak -->
+<!--  second change by deepak -->
 <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
