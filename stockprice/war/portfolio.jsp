@@ -11,6 +11,7 @@
   <body>
 <!--  added by deepak -->
 <!--  second change by deepak -->
+<!--  1st change by neil -->
 <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
