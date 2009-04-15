@@ -9,7 +9,7 @@
 
 <html>
   <body>
-
+<!--  added by deepak -->
 <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
