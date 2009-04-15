@@ -9,13 +9,7 @@
 
 <html>
   <body>
-<!--  added by deepak -->
-<!--  second change by deepak -->
-<!--  another change by deepak -->
-<!--  1st change by neil -->
-<!--  ek aur -->
 
-<!--  2st change by neil -->
 <!--  Phir se ek aur  -->
 <%
     UserService userService = UserServiceFactory.getUserService();
