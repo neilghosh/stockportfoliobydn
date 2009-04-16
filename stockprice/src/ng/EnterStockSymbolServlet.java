@@ -15,6 +15,8 @@ import javax.jdo.Query;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class EnterStockSymbolServlet extends HttpServlet {
     /**
@@ -34,12 +36,17 @@ public class EnterStockSymbolServlet extends HttpServlet {
         if(("delete").equals(action))
         {
         	resp.getWriter().println("You are about to delete "+symbol+" from your portfolio");
-        	//PersistenceManager pm = PMF.get().getPersistenceManager();
-        //	Query query = pm.newQuery("delete from " + StockItem.class.getName() +" where stockCode == '"+symbol+"'") ;
-        	//List<StockItem> StockItems = (List<StockItem>) query.execute();
+        	PersistenceManager pm = PMF.get().getPersistenceManager();
+        	Query query = pm.newQuery("select from " + StockItem.class.getName() +" where stockCode == '"+symbol+"'") ;
+        	List<StockItem> StockItems = (List<StockItem>) query.execute();
+      //  	Long id = ((StockItem)StockItems.get(0)).getId();
+      //  	Key k = KeyFactory.createKey(StockItem.class.getSimpleName(), id);
+        	StockItem s = ((StockItem)StockItems.get(0));
+        	pm.deletePersistent(s);
         }
         else{
         Date date = new Date();
+        
         StockItem greeting = new StockItem(user.getNickname(), symbol, date);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();

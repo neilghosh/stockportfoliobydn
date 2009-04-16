@@ -24,6 +24,7 @@ public class StockItem {
     private Date date;
 
     public StockItem(String user, String stockCode, Date date) {
+    	
         this.user = user;
         this.stockCode = stockCode;
         this.date = date;
