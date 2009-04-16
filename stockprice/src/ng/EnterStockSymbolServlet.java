@@ -27,7 +27,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
 
         String content = req.getParameter("content");
         Date date = new Date();
-        StockItem greeting = new StockItem(user, content, date);
+        StockItem greeting = new StockItem(user.getNickname(), content, date);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {

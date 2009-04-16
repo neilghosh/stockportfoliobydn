@@ -4,51 +4,52 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="javax.jdo.Query" %>
 <%@ page import="ng.StockItem" %>
 <%@ page import="ng.PMF" %>
 
 <html>
   <body>
 
-<!--  Phir se ek aur  -->
+
 <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     if (user != null) {
+    	
 %>
 <p>Hello, <%= user.getNickname() %>! (You can
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
 <%
     } else {
+    	response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
 %>
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
+
 <%
     }
 %>
 
 <%
     PersistenceManager pm = PMF.get().getPersistenceManager();
-    String query = "select from " + StockItem.class.getName();
-    List<StockItem> StockItems = (List<StockItem>) pm.newQuery(query).execute();
+    Query query = pm.newQuery("select from " + StockItem.class.getName() +" where user == '"+user.getNickname()+"'") ;
+    List<StockItem> StockItems = (List<StockItem>) query.execute();
     if (StockItems.isEmpty()) {
 %>
 <p>The guestbook has no messages.</p>
 <%
     } else {
         for (StockItem g : StockItems) {
-            if (g.getAuthor() == null) {
+            if (g.getUser() == null) {
 %>
 <p>An anonymous person wrote:</p>
 <%
             } else {
 %>
-<p><b><%= g.getAuthor().getNickname() %></b> wrote:</p>
+<p><b><%= g.getUser() %></b> wrote:</p>
 <%
             }
 %>
-<blockquote><%= g.getContent() %></blockquote>
+<blockquote><%= g.getStockCode() %></blockquote>
 <%
         }
     }

@@ -15,42 +15,42 @@ public class StockItem {
     private Long id;
 
     @Persistent
-    private User author;
+    private String user;
 
     @Persistent
-    private String content;
+    private String stockCode;
 
     @Persistent
     private Date date;
 
-    public StockItem(User author, String content, Date date) {
-        this.author = author;
-        this.content = content;
+    public StockItem(String user, String stockCode, Date date) {
+        this.user = user;
+        this.stockCode = stockCode;
         this.date = date;
     }
 
-    public Long getId() {
+    public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getStockCode() {
+		return stockCode;
+	}
+
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
+	}
+
+	public Long getId() {
         return id;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public String getContent() {
-        return content;
     }
 
     public Date getDate() {
         return date;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public void setDate(Date date) {
