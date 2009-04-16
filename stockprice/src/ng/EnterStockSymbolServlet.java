@@ -3,15 +3,18 @@ package ng;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
+
 import javax.jdo.PersistenceManager;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.jdo.Query;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-
-import ng.StockItem;
-import ng.PMF;
 
 public class EnterStockSymbolServlet extends HttpServlet {
     /**
@@ -25,9 +28,19 @@ public class EnterStockSymbolServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
-        String content = req.getParameter("content");
+        String symbol = req.getParameter("symbol");
+        
+        String action = req.getParameter("action");
+        if(("delete").equals(action))
+        {
+        	resp.getWriter().println("You are about to delete "+symbol+" from your portfolio");
+        	//PersistenceManager pm = PMF.get().getPersistenceManager();
+        //	Query query = pm.newQuery("delete from " + StockItem.class.getName() +" where stockCode == '"+symbol+"'") ;
+        	//List<StockItem> StockItems = (List<StockItem>) query.execute();
+        }
+        else{
         Date date = new Date();
-        StockItem greeting = new StockItem(user.getNickname(), content, date);
+        StockItem greeting = new StockItem(user.getNickname(), symbol, date);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
@@ -35,7 +48,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         } finally {
             pm.close();
         }
-
+        }
         resp.sendRedirect("/portfolio.jsp");
     }
 }
