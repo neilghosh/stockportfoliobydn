@@ -51,14 +51,11 @@
 <blockquote><%= g.getStockCode() %></blockquote>
 </td>
 <td>
-<%
-//Key k = KeyFactory.createKey(StockItem.class.getSimpleName(),g.getStockCode());
-//StockItem stock = pm.getObjectById(StockItem.class,g.getStockCode() );
-String code = g.getStockCode();
-//query = pm.newQuery("delete from " + StockItem.class.getName() +" where stockCode == '"+g.getStockCode()+"'") ; %>
+
 <form action="/sign" method="post">
-      <div><input name="symbol" type="text" value="<%= g.getStockCode() %>"></input>
-      <input name="action" type="text" value="delete"></input>
+      <div><input name="symbol" type="hidden" value="<%= g.getStockCode() %>"></input>
+      <input name="action" type="hidden" value="delete"></input>
+      <input name="id" type ="hidden" value="<%= g.getId() %>"></input>
       <input type="submit" value="Delete" /></div>
     </form>
 </td>
