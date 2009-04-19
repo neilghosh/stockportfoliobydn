@@ -23,7 +23,8 @@ public class EnterStockSymbolServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(EnterStockSymbolServlet.class.getName());
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+    @SuppressWarnings("unchecked")
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
                 throws IOException {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
@@ -45,6 +46,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         Date date = new Date();
         
         StockItem greeting = new StockItem(user.getNickname(), symbol, date);
+        log.info(user.getEmail() + " Created " + symbol + " on " + date);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
