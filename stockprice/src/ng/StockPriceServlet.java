@@ -24,7 +24,7 @@ public class StockPriceServlet extends HttpServlet {
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
            
-            resp.getWriter().println(url);
+           // resp.getWriter().println(url);
 
             while ((line = reader.readLine()) != null) {
                 // ...
@@ -38,17 +38,8 @@ public class StockPriceServlet extends HttpServlet {
             // ...
         }
     //Index upto which all the data are same and company specific data starts     
-/*
-    int baseIndex = page.indexOf("STOCK                     NAME", 0);	
-    int companylength = page.indexOf("td", baseIndex+169)-baseIndex-169-2; 
-    System.out.print(companylength);
-    //print company name
-    resp.getWriter().println(page.substring(baseIndex+169, baseIndex +169+companylength));
-    resp.getWriter().println(page.substring(baseIndex +169+companylength+907, baseIndex +169+companylength+918));
-    resp.getWriter().println(page.substring(baseIndex +169+companylength+1482, baseIndex +169+companylength+1169));
-   // int proceIndex = page.indexOf("LAST TRADE                     PRICE");
-  */
-    resp.getWriter().println(page);
+
+   // resp.getWriter().println(page);
     resp.getWriter().println("<?xml version='1.0' encoding='ISO-8859-1'?>");     
     resp.getWriter().println("<data>");    
     resp.getWriter().println("<company>"+ng.util.getString (page,"STOCK                     NAME", 169, "td",2)+"</company>");  
