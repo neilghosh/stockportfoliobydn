@@ -29,14 +29,42 @@ public class StockItem {
 
 	@Persistent
 	private Date date;
-	
-	private  String companyName;
 
-	public StockItem(String user, String stockCode, Date date) {
+	
+	@Persistent
+	private int quantity;
+	
+	@Persistent
+	private double invPrice;
+	
+	
+	
+	
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getInvPrice() {
+		return invPrice;
+	}
+
+	public void setInvPrice(double invPrice) {
+		this.invPrice = invPrice;
+	}
+
+	public StockItem(String user, String stockCode, Date date, int quantity, double invPrice) {
 
 		this.user = user;
 		this.stockCode = stockCode;
 		this.date = date;
+		this.quantity=quantity;
+		this.invPrice=invPrice;
 	}
 
 	public String getUser() {
@@ -67,6 +95,10 @@ public class StockItem {
 		this.date = date;
 	}
 
+	public void setCurrentPrice(){
+		
+	}
+	
 	public double getStockPrice() {
 		double price = 0.0d;
 		try {
