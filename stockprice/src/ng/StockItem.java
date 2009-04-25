@@ -1,14 +1,15 @@
 package ng;
 
 import java.util.Date;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +29,8 @@ public class StockItem {
 
 	@Persistent
 	private Date date;
+	
+	private  String companyName;
 
 	public StockItem(String user, String stockCode, Date date) {
 
@@ -84,4 +87,5 @@ public class StockItem {
 		}
 		return price;
 	}
+	
 }
