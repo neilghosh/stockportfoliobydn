@@ -2,6 +2,7 @@ package ng;
 
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -32,6 +33,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         String symbol = req.getParameter("symbol");
         
         String action = req.getParameter("action");
+        
         if(("delete").equals(action))
         {
         	Long id =Long.valueOf(req.getParameter("id"));
@@ -43,17 +45,44 @@ public class EnterStockSymbolServlet extends HttpServlet {
         	pm.deletePersistent(s);
         }
         else{
-        Date date = new Date();
-        
-        StockItem greeting = new StockItem(user.getNickname(), symbol, date);
-        log.info(user.getEmail() + " Created " + symbol + " on " + date);
-
+        Date date = new Date(req.getParameter("date"));
+        int quantity=Integer.parseInt(req.getParameter("qty"));
+        double invPrice = Double.parseDouble(req.getParameter("price"));
         PersistenceManager pm = PMF.get().getPersistenceManager();
-        try {
-            pm.makePersistent(greeting);
-        } finally {
-            pm.close();
-        }
+        Query query = pm.newQuery("select from " + StockItem.class.getName() +" where stockCode == '"+symbol+"'") ;
+    	List<StockItem> StockItems = (List<StockItem>) query.execute();
+    	if(StockItems.size()==0){
+    		System.out.println("1");
+	        StockItem greeting = new StockItem(user.getNickname(), symbol, date,quantity,invPrice);
+	        log.info(user.getEmail() + " Created " + symbol + " on " + date);
+	        try {
+	            pm.makePersistent(greeting);
+	        } finally {
+	            pm.close();
+	        }
+    	}
+    	else{
+    		System.out.println("2");
+    		StockItem s = ((StockItem)StockItems.get(0));
+    		double prevInvestment=s.getInvPrice()*s.getQuantity();
+    		double currentInvestment= invPrice*quantity;
+    		double avgPrice = (prevInvestment+currentInvestment)/(s.getQuantity()+quantity);
+    		DecimalFormat df = new DecimalFormat("0.00");
+    		String a = df.format(avgPrice);
+    		double AA = Double.parseDouble(a);
+
+    		s.setInvPrice(AA);
+    		System.out.println("avg price:"+s.getInvPrice());
+    		s.setQuantity(s.getQuantity()+quantity);
+    		System.out.println("total qty :"+s.getQuantity());
+    		try {
+	            pm.makePersistent(s);
+	        } finally {
+	            pm.close();
+	        }
+    	}
+      //  PersistenceManager pm = PMF.get().getPersistenceManager();
+      
         }
         resp.sendRedirect("/portfolio.jsp");
     }
