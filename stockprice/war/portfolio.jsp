@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page import="javax.jdo.PersistenceManager"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
@@ -22,9 +23,26 @@
 	href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
 out</a>.)</p>
 <form action="/sign" method="post">
-<div><input name="symbol" type="text"></input> <input
-	type="submit" value="Post StockItem" /></div>
-</form>
+<table>
+	<tr>
+		<td align="center"><b>Symbol</b></td>
+		<td align="center"><b>Qty</b></td>
+		<td align="center"><b>Price</b></td>
+		<td align="center"><b>Date</b></td>
+	</tr>
+	<tr>
+		<td><input name="symbol" type="text" size="10"></input></td>
+		<td><input name="qty" type="text" size="4"></input></td>
+		<td><input name="price" type="text" size="10"></input></td>
+		<td><input name="date" type="text" size="10"></input></td>
+	</tr>
+</table>
+<br>
+
+
+<input type="button" value="Search"
+	onClick="openModal()">
+<input type="submit" value="Post StockItem" /></form>
 <%
 	} else {
 		response.sendRedirect(userService.createLoginURL(request
@@ -44,10 +62,19 @@ out</a>.)</p>
 <%
 	} else {
 %>
-<table>
+<table border="1"  >
+<tr>
+		<td align="center"><b>Stock</b></td>
+		<td align="center"><b>Live Price</b></td>
+		<td align="center"><b>Quantity</b></td>
+		<td align="center"><b>Inv. Price</b></td>
+		<td align="center"><b>Overall Gain</b></td>
+		<td align="center"><b>Overall % Gain</b></td>
+	</tr>
 	<%
 		for (StockItem g : StockItems) {
 	%>
+	
 	<tr>
 		<td>
 		<blockquote><%=g.getStockCode()%></blockquote>
@@ -58,7 +85,35 @@ out</a>.)</p>
 		</td>
 
 		<td>
+		<blockquote><%=g.getQuantity()%></blockquote>
+		</td>
 
+		<td>
+		<blockquote><%=g.getInvPrice()%></blockquote>
+		</td>
+
+		<td>
+		<blockquote>
+		<%
+			DecimalFormat df = new DecimalFormat("0.00");
+					String a = df.format((g.getStockPrice() - g.getInvPrice())
+							* g.getQuantity());
+					double AA = Double.parseDouble(a);
+		%><%=AA%></blockquote>
+		</td>
+
+		<td>
+		<blockquote>
+		<%
+			df = new DecimalFormat("0.00");
+					a = df.format(((g.getStockPrice() - g.getInvPrice()) * g
+							.getQuantity())
+							* 100 / (g.getQuantity() * g.getInvPrice()));
+					AA = Double.parseDouble(a);
+		%><%=AA%></blockquote>
+		</td>
+
+		<td>
 		<form action="/sign" method="post">
 		<div><input name="symbol" type="hidden"
 			value="<%=g.getStockCode()%>"></input> <input name="action"
@@ -96,9 +151,6 @@ function openModal()
 }
 //-->
 </script>
-
-<form><input type="button" value="Search"
-	onClick="openModal()"></form>
 
 </body>
 </html>
