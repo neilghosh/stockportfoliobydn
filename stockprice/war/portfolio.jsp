@@ -52,11 +52,11 @@ out</a>.)</p>
 		<td>
 		<blockquote><%=g.getStockCode()%></blockquote>
 		</td>
-		
+
 		<td>
 		<blockquote><%=g.getStockPrice()%></blockquote>
 		</td>
-		
+
 		<td>
 
 		<form action="/sign" method="post">
@@ -76,6 +76,29 @@ out</a>.)</p>
 	pm.close();
 %>
 
+<!-- Creating Pop up window bellow  -->
+<script language="JavaScript" type="text/javascript">
+<!--
+var retVal=""
+var valReturned;
+function openModal() 
+{
+	if (document.forms[0].symbol.value == '')
+	{
+		alert('Please enter partial value of company t0 search');
+	}
+	else{	 
+	retVal=showModalDialog('searchSymbol.jsp?q='+document.forms[0].symbol.value);
+	valReturned=retVal;
+	
+	document.forms[0].symbol.value = valReturned;
+	}
+}
+//-->
+</script>
+
+<form><input type="button" value="Search"
+	onClick="openModal()"></form>
 
 </body>
 </html>
