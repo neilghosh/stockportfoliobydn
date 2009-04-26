@@ -24,7 +24,8 @@ public class EnterStockSymbolServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(EnterStockSymbolServlet.class.getName());
 
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
                 throws IOException {
         UserService userService = UserServiceFactory.getUserService();
@@ -41,7 +42,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         	PersistenceManager pm = PMF.get().getPersistenceManager();
         	Query query = pm.newQuery("select from " + StockItem.class.getName() +" where id == "+id) ;
         	List<StockItem> StockItems = (List<StockItem>) query.execute();
-        	StockItem s = ((StockItem)StockItems.get(0));
+        	StockItem s = (StockItems.get(0));
         	pm.deletePersistent(s);
         }
         else{
@@ -63,7 +64,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
     	}
     	else{
     		System.out.println("2");
-    		StockItem s = ((StockItem)StockItems.get(0));
+    		StockItem s = (StockItems.get(0));
     		double prevInvestment=s.getInvPrice()*s.getQuantity();
     		double currentInvestment= invPrice*quantity;
     		double avgPrice = (prevInvestment+currentInvestment)/(s.getQuantity()+quantity);

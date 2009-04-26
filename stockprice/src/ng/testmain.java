@@ -1,15 +1,5 @@
 package ng;
 
-import java.io.File;
-
-import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 public class testmain {
 
 	/**
@@ -17,7 +7,7 @@ public class testmain {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		try {
+	/*	try {
 
 			File file = new File("c:\\MyXMLFile.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -34,6 +24,16 @@ public class testmain {
 		} catch (Exception e) {
 			System.out.print("Ex..");
 		}
+*/
+		
+		
+		System.out.print(ng.util.getName("BSES"));
+		
+		
+		
+		
+		
+		
+		
 	}
-
 }

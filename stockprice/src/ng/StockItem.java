@@ -113,7 +113,7 @@ public class StockItem {
 			NodeList nodeLst = doc.getElementsByTagName("price");
 			Element priceElement = (Element) nodeLst.item(0);
 			NodeList prc = priceElement.getChildNodes();
-			price = Double.parseDouble((((Node) prc.item(0)).getNodeValue()));
+			price = Double.parseDouble(((prc.item(0)).getNodeValue()));
 		} catch (Exception e) {
 			System.out.print("Ex..");
 		}
