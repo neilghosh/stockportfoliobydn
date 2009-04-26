@@ -40,7 +40,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         	Long id =Long.valueOf(req.getParameter("id"));
         	resp.getWriter().println("You are about to delete "+symbol+" from your portfolio");
         	PersistenceManager pm = PMF.get().getPersistenceManager();
-        	Query query = pm.newQuery("select from " + StockItem.class.getName() +" where id == "+id) ;
+        	Query query = pm.newQuery("select from " + StockItem.class.getName() +" where id == "+id);
         	List<StockItem> StockItems = (List<StockItem>) query.execute();
         	StockItem s = (StockItems.get(0));
         	pm.deletePersistent(s);
@@ -50,7 +50,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
         int quantity=Integer.parseInt(req.getParameter("qty"));
         double invPrice = Double.parseDouble(req.getParameter("price"));
         PersistenceManager pm = PMF.get().getPersistenceManager();
-        Query query = pm.newQuery("select from " + StockItem.class.getName() +" where stockCode == '"+symbol+"'") ;
+        Query query = pm.newQuery("select from " + StockItem.class.getName() +" where stockCode == '"+symbol+"' && user == '"+ user.getNickname() + "'");
     	List<StockItem> StockItems = (List<StockItem>) query.execute();
     	if(StockItems.size()==0){
     		System.out.println("1");
