@@ -64,4 +64,53 @@ public class util {
 		return source;
 	}
 
+
+	public static String getPrice(String q) {
+
+		String page = "";
+		String source = "";
+
+		   try {
+	            URL url = new URL("http://getquote.icicidirect.com/trading/equity/trading_stock_quote.asp?Symbol="+q);
+	            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+	            String line;
+	           
+	           // resp.getWriter().println(url);
+
+	            while ((line = reader.readLine()) != null) {
+	                // ...
+	            	page = page + line;
+	            }
+	            reader.close();
+
+	        } catch (MalformedURLException e) {
+	            // ...
+	        } catch (IOException e) {
+	            // ...
+	        }
+	    //Index upto which all the data are same and company specific data starts     
+
+	   // resp.getWriter().println(page);
+	    source = source + "<?xml version='1.0' encoding='ISO-8859-1'?>";     
+	    source = source + "<data>";    
+	    source = source + "<company>"+ng.util.getString (page,"STOCK                     NAME", 169, "td",2)+"</company>";  
+	    source = source + "<time>"+ng.util.getString (page,"LAST TRADED                     TIME", 112, "td",2)+"</time>";  
+	    source = source + "<price>"+ng.util.getString (page,"LAST TRADE                     PRICE", 111, "td",2)+"</price>";
+	    source = source + "</data>";
+	    
+		
+		
+		
+		
+		return source;
+	}
+
+
+
+
+
+
+
+
+
 }

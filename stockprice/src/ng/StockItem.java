@@ -1,5 +1,7 @@
 package ng;
 
+import java.io.StringReader;
+import java.net.URL;
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -14,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class StockItem {
@@ -102,12 +105,10 @@ public class StockItem {
 	public double getStockPrice() {
 		double price = 0.0d;
 		try {
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db
-					.parse("http://testjavaneil.appspot.com/stockprice?q="
-							+ stockCode);
+			
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			Document doc = factory.newDocumentBuilder().parse(
+		                new InputSource(new StringReader(util.getPrice(stockCode))));
 			doc.getDocumentElement().normalize();
 
 			NodeList nodeLst = doc.getElementsByTagName("price");
@@ -115,7 +116,7 @@ public class StockItem {
 			NodeList prc = priceElement.getChildNodes();
 			price = Double.parseDouble(((prc.item(0)).getNodeValue()));
 		} catch (Exception e) {
-			System.out.print("Ex..");
+			System.out.print(e);
 		}
 		return price;
 	}

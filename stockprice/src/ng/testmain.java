@@ -27,7 +27,6 @@ public class testmain {
 */
 		
 		
-		System.out.print(ng.util.getName("BSES"));
 		
 		
 		
