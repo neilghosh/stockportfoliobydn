@@ -2,13 +2,19 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="javax.xml.parsers.DocumentBuilder"%>
 <%@ page import="javax.xml.parsers.DocumentBuilderFactory"%>
+<%@ page import="java.io.*"%>
 <%@ page import="org.w3c.dom.Document"%>
 <%@ page import="org.w3c.dom.Element"%>
 <%@ page import="org.w3c.dom.Node"%>
 <%@ page import="org.w3c.dom.NodeList"%>
+<%@ page import="org.xml.sax.*"%>
+<%@ page import="ng.WebPageFetcher"%>
+<%@ page import="java.net.URL"%>
+<%@ page import="java.lang.StringBuilder"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="ng.util"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ticker Symbol search</title>
@@ -18,16 +24,26 @@
 	String q = request.getParameter("q").toString();
 	String ticker = null;
 	String name = null;
+	String XMLString = null;
 	try {
 
+		WebPageFetcher fetcher =  new WebPageFetcher(new URL("http://testjavaneil.appspot.com/stockname?q="+ q));
+		//out.println("Fetched URL "+util.getName(q));
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		Document document = factory.newDocumentBuilder().parse(
+	                new InputSource(new StringReader(util.getName(q))));
+		
+
+		/*
 		DocumentBuilderFactory dbf = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db
 				.parse("http://testjavaneil.appspot.com/stockname?q="
 						+ q);
+		*/
 		document.getDocumentElement().normalize();
-		//System.out.println("Root element "+document.getDocumentElement().getNodeName());
+		out.println("Root element "+document.getDocumentElement().getNodeName());
 		NodeList node = document.getElementsByTagName("company");
 		if (node.getLength() == 0)
 		{
@@ -65,7 +81,7 @@
 		}
 
 	} catch (Exception e) {
-		System.out.print("Ex..");
+		out.print(e.getMessage());
 	}
 %>
 </body>
