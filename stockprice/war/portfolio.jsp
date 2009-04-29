@@ -11,6 +11,21 @@
 <%@ page import="ng.PMF"%>
 
 <html>
+<head>
+<!-- UTF-8 is the recommended encoding for your pages -->
+    <meta http-equiv="content-type" content="text/xml; charset=utf-8" />
+    <title>portfolio || neilghosh.com</title>
+
+<!-- Loading Theme file(s) -->
+    <link rel="stylesheet" href="css/bluexp.css" />
+
+<!-- Loading Calendar JavaScript files -->
+    <script type="text/javascript" src="js/zapatec.js"></script>
+    <script type="text/javascript" src="js/calendar.js"></script>
+<!-- Loading language definition file -->
+    <script type="text/javascript" src="js/calendar-en.js"></script>
+
+</head>
 <body>
 
 
@@ -22,19 +37,20 @@
 <p>Hello, <%=user.getNickname()%>! (You can <a
 	href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
 out</a>.)</p>
-<form action="/sign" method="post">
+<form action="/sign" method="post" onsubmit="return validate()">
 <table>
 	<tr>
 		<td align="center"><b>Symbol</b></td>
 		<td align="center"><b>Qty</b></td>
 		<td align="center"><b>Price</b></td>
 		<td align="center"><b>Date</b></td>
+		
 	</tr>
 	<tr>
 		<td><input name="symbol" type="text" size="10"></input></td>
 		<td><input name="qty" type="text" size="4"></input></td>
 		<td><input name="price" type="text" size="10"></input></td>
-		<td><input name="date" type="text" size="10"></input></td>
+		<td><input name="date" type="text" id="date" size="10"></input><button id="trigger">...</button></td>
 	</tr>
 </table>
 <br>
@@ -42,7 +58,7 @@ out</a>.)</p>
 
 <input type="button" value="Search"
 	onClick="openModal()">
-<input type="submit" value="Post StockItem" /></form>
+<input type="submit" value="Save" /></form>
 <%
 	} else {
 		response.sendRedirect(userService.createLoginURL(request
@@ -140,7 +156,7 @@ function openModal()
 {
 	if (document.forms[0].symbol.value == '')
 	{
-		alert('Please enter partial value of company t0 search');
+		alert('Please enter partial value of company to search');
 	}
 	else{	 
 	retVal=showModalDialog('searchSymbol.jsp?q='+document.forms[0].symbol.value);
@@ -149,8 +165,52 @@ function openModal()
 	document.forms[0].symbol.value = valReturned;
 	}
 }
+function validate()
+{
+	if (document.forms[0].symbol.value == '')
+	{
+		alert('Please enter Symbol');
+		return false;
+	}
+	if (document.forms[0].qty.value == '')
+	{
+		alert('Please enter Quantity');
+		return false;
+	}
+	else if (document.forms[0].price.value == '')
+	{
+		alert('Please enter price');
+		return false;
+	}
+	else if (document.forms[0].date.value == '')
+	{
+		alert('Please enter Date');
+		return false;
+	}
+}
 //-->
 </script>
+    <script type="text/javascript">//<![CDATA[
+      Zapatec.Calendar.setup({
+        firstDay          : 1,
+        weekNumbers       : false,
+        showOthers        : true,
+        electric          : false,
+        inputField        : "date",
+        button            : "trigger",
+        ifFormat          : "%d-%m-%Y",
+        daFormat          : "%Y/%m/%d"
+      });
+    //]]></script>
+<noscript>
+<br/>
+This page uses a <a href="http://www.zapatec.com/website/main/products/prod1/"> Javascript Calendar </a>, but
+your browser does not support Javascript. 
+<br/>
+Either enable Javascript in your Browser or upgrade to a newer version.
+</noscript>
+
+
 
 </body>
 </html>
