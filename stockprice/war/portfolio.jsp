@@ -202,15 +202,5 @@ function validate()
         daFormat          : "%Y/%m/%d"
       });
     //]]></script>
-<noscript>
-<br/>
-This page uses a <a href="http://www.zapatec.com/website/main/products/prod1/"> Javascript Calendar </a>, but
-your browser does not support Javascript. 
-<br/>
-Either enable Javascript in your Browser or upgrade to a newer version.
-</noscript>
-
-
-
 </body>
 </html>

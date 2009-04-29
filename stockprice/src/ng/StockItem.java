@@ -31,17 +31,11 @@ public class StockItem {
 	@Persistent
 	private Date date;
 
-	
 	@Persistent
 	private int quantity;
-	
+
 	@Persistent
 	private double invPrice;
-	
-	
-	
-	
-
 
 	public int getQuantity() {
 		return quantity;
@@ -59,13 +53,14 @@ public class StockItem {
 		this.invPrice = invPrice;
 	}
 
-	public StockItem(String user, String stockCode, Date date, int quantity, double invPrice) {
+	public StockItem(String user, String stockCode, Date date, int quantity,
+			double invPrice) {
 
 		this.user = user;
 		this.stockCode = stockCode;
 		this.date = date;
-		this.quantity=quantity;
-		this.invPrice=invPrice;
+		this.quantity = quantity;
+		this.invPrice = invPrice;
 	}
 
 	public String getUser() {
@@ -96,38 +91,38 @@ public class StockItem {
 		this.date = date;
 	}
 
-	public void setCurrentPrice(){
-		
+	public void setCurrentPrice() {
+
 	}
-	
+
 	public double getStockPrice() {
 		double price = 0.0d;
 		String PriceStr = "";
 		try {
-			
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			Document doc = factory.newDocumentBuilder().parse(
-		                new InputSource(new StringReader(util.getPrice(stockCode))));
+
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			Document doc = factory.newDocumentBuilder()
+					.parse(
+							new InputSource(new StringReader(util
+									.getPrice(stockCode))));
 			doc.getDocumentElement().normalize();
 
 			NodeList nodeLst = doc.getElementsByTagName("price");
 			Element priceElement = (Element) nodeLst.item(0);
 			NodeList prc = priceElement.getChildNodes();
-			//price = Double.parseDouble(((prc.item(0)).getNodeValue()));
-			
-			NumberFormat nf=NumberFormat.getInstance();
+			// price = Double.parseDouble(((prc.item(0)).getNodeValue()));
+
+			NumberFormat nf = NumberFormat.getInstance();
 			price = nf.parse(((prc.item(0)).getNodeValue())).doubleValue();
-			 
-			
-		}catch (java.text.ParseException ex)
-		{
+
+		} catch (java.text.ParseException ex) {
 			System.out.print(ex.getMessage());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.print(e);
-		} 
-		
+		}
+
 		return price;
 	}
-	
+
 }
