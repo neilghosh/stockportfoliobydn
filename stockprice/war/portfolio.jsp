@@ -14,7 +14,7 @@
 <head>
 <!-- UTF-8 is the recommended encoding for your pages -->
     <meta http-equiv="content-type" content="text/xml; charset=utf-8" />
-    <title>portfolio || neilghosh.com</title>
+    <title>Portfolio</title>
 
 <!-- Loading Theme file(s) -->
     <link rel="stylesheet" href="css/bluexp.css" />
@@ -198,8 +198,8 @@ function validate()
         electric          : false,
         inputField        : "date",
         button            : "trigger",
-        ifFormat          : "%d-%m-%Y",
-        daFormat          : "%Y/%m/%d"
+        ifFormat          : "%d-%b-%Y",
+        daFormat          : "%Y/%b/%d"
       });
     //]]></script>
 </body>
