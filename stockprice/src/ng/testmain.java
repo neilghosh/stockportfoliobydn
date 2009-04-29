@@ -1,34 +1,36 @@
 package ng;
-
+import ng.WebPageFetcher;
+import java.net.*;
 public class testmain {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	/*	try {
-
-			File file = new File("c:\\MyXMLFile.xml");
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db
-					.parse("http://testjavaneil.appspot.com/stockprice?q=BSES");
-			doc.getDocumentElement().normalize();
-
-			NodeList nodeLst = doc.getElementsByTagName("price");
-			Element priceElement = (Element) nodeLst.item(0);
-			NodeList fstNm = priceElement.getChildNodes();
-			System.out.println(((Node) fstNm.item(0)).getNodeValue());
 			
+		String page = "";
+		String source = "";
+		WebPageFetcher fetcher = null;
+		try {
+			fetcher = new WebPageFetcher(new URL("http://getquote.icicidirect.com/trading/equity/trading_stock_quote.asp?Symbol="+"BSES"));
+			page=fetcher.getPageContent();
 		} catch (Exception e) {
-			System.out.print("Ex..");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-*/
+
+	   // resp.getWriter().println(page);
+	    source = source + "<?xml version='1.0' encoding='ISO-8859-1'?>";     
+	    source = source + "<data>";    
+	    source = source + "<company>"+ng.util.getString (page,"  NAME", 144, "td",2)+"</company>";  
+	    source = source + "<time>"+ng.util.getString (page,"  TIME", 82, "td",2)+"</time>";  
+	    source = source + "<price>"+ng.util.getString (page,"  PRICE", 82, "td",2)+"</price>";
+	    source = source + "</data>";
+	    
 		
-		
-		
-		
+
+		System.out.println(source);
+
 		
 		
 		

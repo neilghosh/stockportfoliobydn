@@ -10,9 +10,13 @@ public class util {
 
 	public static String getString(String str, String startstr, int gap1,
 			String endstr, int gap2) {
+		//System.out.print(endstr);
+		//System.out.println(str);
+		
+		
 		int baseIndex = str.indexOf(startstr);
 		if (baseIndex == -1) {
-			return "N/A";
+			return "-999";
 		} else {
 			//System.out.print(baseIndex);
 			int len = str.indexOf(endstr, baseIndex + gap1) - baseIndex - gap1
@@ -69,7 +73,7 @@ public class util {
 
 		String page = "";
 		String source = "";
-
+		/*
 		   try {
 	            URL url = new URL("http://getquote.icicidirect.com/trading/equity/trading_stock_quote.asp?Symbol="+q);
 	            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -89,19 +93,34 @@ public class util {
 	            // ...
 	        }
 	    //Index upto which all the data are same and company specific data starts     
+	*/
+		
+		WebPageFetcher fetcher = null;
+		try {
+			fetcher = new WebPageFetcher(new URL("http://getquote.icicidirect.com/trading/equity/trading_stock_quote.asp?Symbol="+q));
+			page=fetcher.getPageContent();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-	   // resp.getWriter().println(page);
+	   /* Change for the new technology formar
 	    source = source + "<?xml version='1.0' encoding='ISO-8859-1'?>";     
 	    source = source + "<data>";    
 	    source = source + "<company>"+ng.util.getString (page,"STOCK                     NAME", 169, "td",2)+"</company>";  
 	    source = source + "<time>"+ng.util.getString (page,"LAST TRADED                     TIME", 112, "td",2)+"</time>";  
 	    source = source + "<price>"+ng.util.getString (page,"LAST TRADE                     PRICE", 111, "td",2)+"</price>";
 	    source = source + "</data>";
-	    
+	   */ 
+	    source = source + "<?xml version='1.0' encoding='ISO-8859-1'?>";     
+	    source = source + "<data>";    
+	    source = source + "<company>"+ng.util.getString (page,"  NAME", 144, "td",2)+"</company>";  
+	    source = source + "<time>"+ng.util.getString (page,"  TIME", 82, "td",2)+"</time>";  
+	    source = source + "<price>"+ng.util.getString (page,"  PRICE", 86, "td",2)+"</price>";
+	    source = source + "</data>";
 		
 		
-		
-		
+		//System.out.println(source+" "+page);
 		return source;
 	}
 

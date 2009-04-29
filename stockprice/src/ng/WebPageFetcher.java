@@ -2,6 +2,7 @@ package ng;
 
 import java.io.*;
 import java.net.*;
+import java.util.Properties;
 import java.util.Scanner;
 
 /** Fetches the HTML content of a web page (or HTTP header) as a String. */
@@ -16,11 +17,11 @@ public final class WebPageFetcher {
   * </ul>
   */
 
-  public WebPageFetcher( URL aURL ){
-    if ( ! HTTP.equals(aURL.getProtocol())  ) {
-      throw new IllegalArgumentException("URL is not for HTTP Protocol: " + aURL);
+  public WebPageFetcher( URL url ){
+    if ( ! HTTP.equals(url.getProtocol())  ) {
+      throw new IllegalArgumentException("URL is not for HTTP Protocol: " + url);
     }
-    fURL = aURL;
+    fURL = url;
   }
 
   public WebPageFetcher( String aUrlName ) throws MalformedURLException {
@@ -30,9 +31,16 @@ public final class WebPageFetcher {
   /** Fetch the HTML content of the page as simple text.   */
   public String getPageContent() {
     String result = null;
+ /*
+    Properties systemProperties = System.getProperties();
+    systemProperties.setProperty("http.proxyHost","www-proxy.us.oracle.com");
+    systemProperties.setProperty("http.proxyPort","80");
+*/
+    
     URLConnection connection = null;
     try {
       connection =  fURL.openConnection();
+     
       Scanner scanner = new Scanner(connection.getInputStream());
       scanner.useDelimiter(END_OF_INPUT);
       result = scanner.next();
