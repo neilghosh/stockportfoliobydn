@@ -2,7 +2,6 @@ package ng;
 
 import java.io.*;
 import java.net.*;
-import java.util.Properties;
 import java.util.Scanner;
 
 /** Fetches the HTML content of a web page (or HTTP header) as a String. */
