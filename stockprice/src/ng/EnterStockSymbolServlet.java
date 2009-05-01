@@ -42,9 +42,9 @@ public class EnterStockSymbolServlet extends HttpServlet {
 							+ " from your portfolio");
 			PersistenceManager pm = PMF.get().getPersistenceManager();
 			Query query = pm.newQuery("select from "
-					+ StockItem.class.getName() + " where id == " + id);
-			List<StockItem> StockItems = (List<StockItem>) query.execute();
-			StockItem s = (StockItems.get(0));
+					+ Transaction.class.getName() + " where id == " + id);
+			List<Transaction> StockItems = (List<Transaction>) query.execute();
+			Transaction s = (StockItems.get(0));
 			pm.deletePersistent(s);
 		} else {
 			Date date = new Date(req.getParameter("date"));
@@ -52,12 +52,12 @@ public class EnterStockSymbolServlet extends HttpServlet {
 			double invPrice = Double.parseDouble(req.getParameter("price"));
 			PersistenceManager pm = PMF.get().getPersistenceManager();
 			Query query = pm.newQuery("select from "
-					+ StockItem.class.getName() + " where stockCode == '"
+					+ Transaction.class.getName() + " where stockCode == '"
 					+ symbol + "' && user == '" + user.getNickname() + "'");
-			List<StockItem> StockItems = (List<StockItem>) query.execute();
+			List<Transaction> StockItems = (List<Transaction>) query.execute();
 			if (StockItems.size() == 0) {
 				System.out.println("1");
-				StockItem greeting = new StockItem(user.getNickname(), symbol,
+				Transaction greeting = new Transaction(user.getNickname(), symbol,
 						date, quantity, invPrice);
 				log
 						.info(user.getEmail() + " Created " + symbol + " on "
@@ -69,7 +69,7 @@ public class EnterStockSymbolServlet extends HttpServlet {
 				}
 			} else {
 				System.out.println("2");
-				StockItem s = (StockItems.get(0));
+				Transaction s = (StockItems.get(0));
 				double prevInvestment = s.getInvPrice() * s.getQuantity();
 				double currentInvestment = invPrice * quantity;
 				double avgPrice = (prevInvestment + currentInvestment)
