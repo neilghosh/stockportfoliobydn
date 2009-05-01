@@ -8,6 +8,7 @@
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="javax.jdo.Query"%>
 <%@ page import="ng.Transaction"%>
+<%@ page import="ng.util"%>
 <%@ page import="ng.PMF"%>
 
 <html>
@@ -78,6 +79,7 @@ out</a>.)</p>
 
 <%
 	} else {
+		List<Transaction> t= util.consolidate(Transactions);
 %>
 <table border="1">
 	<tr>
@@ -89,7 +91,7 @@ out</a>.)</p>
 		<td align="center"><b>Overall % Gain</b></td>
 	</tr>
 	<%
-		for (Transaction g : Transactions) {
+		for (Transaction g : t) {
 	%>
 
 	<tr>
@@ -102,11 +104,11 @@ out</a>.)</p>
 		</td>
 
 		<td>
-		<blockquote><%=g.getQuantity()%></blockquote>
+		<blockquote><%=g.getTotalQuantity()%></blockquote>
 		</td>
 
 		<td>
-		<blockquote><%=g.getInvPrice()%></blockquote>
+		<blockquote><%=g.getAvgPrice() %></blockquote>
 
 		<%
 			double brokerage = (g.getInvPrice()*g.getQuantity()*0.001385)+27.58;

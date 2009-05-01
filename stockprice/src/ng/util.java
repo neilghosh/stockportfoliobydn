@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
 
 public class util {
 
@@ -24,7 +29,46 @@ public class util {
 			return str.substring(baseIndex + gap1, baseIndex + gap1 + len);
 		}
 	}
-
+	public static ArrayList<Transaction> consolidate(List<Transaction> StockItems)
+	{
+		//PersistenceManager pm = PMF.get().getPersistenceManager();
+		for(Transaction t: StockItems){
+		System.out.println(t.getStockCode());
+		System.out.println(t.getQuantity());}
+		boolean found=false;
+		ArrayList<Transaction> consolidated=new ArrayList();
+		for(Transaction t: StockItems){
+			found = false;
+			for(Transaction old: consolidated){
+				if(old.getStockCode().equals(t.getStockCode())){
+					double prevInvestment = old.getInvPrice() * old.getQuantity();
+					double currentInvestment = t.getInvPrice() * t.getQuantity();
+					double avgPrice = (prevInvestment + currentInvestment)
+							/ (old.getQuantity() + t.getQuantity());
+					DecimalFormat df = new DecimalFormat("0.00");
+					String a = df.format(avgPrice);
+					double AA = Double.parseDouble(a);
+			
+					old.setAvgPrice(AA);
+				//	System.out.println("avg price:" + s.getInvPrice());
+					old.setTotalQuantity(old.getQuantity() + t.getQuantity());
+				//	System.out.println("total qty :" + s.getQuantity());
+					found = true;
+					
+				}
+			}
+			
+			if(found == false)
+				consolidated.add(t);
+		}
+	//	pm.close();
+		System.out.println("**********************");
+		for(Transaction t: consolidated){
+			System.out.println(t.getStockCode());
+			System.out.println(t.getQuantity());}
+		return consolidated;
+		
+	}
 	public static String getNameXML(String q) {
 
 		String page = "";

@@ -37,6 +37,39 @@ public class Transaction {
 	@Persistent
 	private double invPrice;
 
+	@Persistent
+	private String transactionType;
+	
+	
+	private int totalQuantity;
+
+	
+	private double avgPrice;
+
+	public int getTotalQuantity() {
+		return totalQuantity;
+	}
+
+	public void setTotalQuantity(int totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
+
+	public double getAvgPrice() {
+		return avgPrice;
+	}
+
+	public void setAvgPrice(double avgPrice) {
+		this.avgPrice = avgPrice;
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -54,13 +87,16 @@ public class Transaction {
 	}
 
 	public Transaction(String user, String stockCode, Date date, int quantity,
-			double invPrice) {
+			double invPrice, String transactionType) {
 
 		this.user = user;
 		this.stockCode = stockCode;
 		this.date = date;
 		this.quantity = quantity;
 		this.invPrice = invPrice;
+		this.transactionType = transactionType;
+		this.avgPrice=invPrice;
+		this.totalQuantity=quantity;
 	}
 
 	public String getUser() {
@@ -102,7 +138,9 @@ public class Transaction {
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
-			Document doc = factory.newDocumentBuilder().parse(new InputSource(new StringReader(util.getPriceXML(stockCode))));
+			Document doc = factory.newDocumentBuilder().parse(
+					new InputSource(new StringReader(util
+							.getPriceXML(stockCode))));
 			doc.getDocumentElement().normalize();
 
 			NodeList nodeLst = doc.getElementsByTagName("price");
