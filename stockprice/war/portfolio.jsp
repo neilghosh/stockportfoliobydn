@@ -7,7 +7,7 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="javax.jdo.Query"%>
-<%@ page import="ng.StockItem"%>
+<%@ page import="ng.Transaction"%>
 <%@ page import="ng.PMF"%>
 
 <html>
@@ -69,10 +69,10 @@ out</a>.)</p>
 
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	Query query = pm.newQuery("select from "
-			+ StockItem.class.getName() + " where user == '"
+			+ Transaction.class.getName() + " where user == '"
 			+ user.getNickname() + "'");
-	List<StockItem> StockItems = (List<StockItem>) query.execute();
-	if (StockItems.isEmpty()) {
+	List<Transaction> Transactions = (List<Transaction>) query.execute();
+	if (Transactions.isEmpty()) {
 %>
 <p>You have no stocks to watch.</p>
 
@@ -89,7 +89,7 @@ out</a>.)</p>
 		<td align="center"><b>Overall % Gain</b></td>
 	</tr>
 	<%
-		for (StockItem g : StockItems) {
+		for (Transaction g : Transactions) {
 	%>
 
 	<tr>
