@@ -45,17 +45,17 @@ public class StockPriceServlet extends HttpServlet {
 		resp.getWriter().println("<data>");
 		resp.getWriter().println(
 				"<company>"
-						+ ng.util.getString(page,
+						+ ng.util.getStringSegment(page,
 								"STOCK                     NAME", 169, "td", 2)
 						+ "</company>");
 		resp.getWriter().println(
 				"<time>"
-						+ ng.util.getString(page,
+						+ ng.util.getStringSegment(page,
 								"LAST TRADED                     TIME", 112,
 								"td", 2) + "</time>");
 		resp.getWriter().println(
 				"<price>"
-						+ ng.util.getString(page,
+						+ ng.util.getStringSegment(page,
 								"LAST TRADE                     PRICE", 111,
 								"td", 2) + "</price>");
 		resp.getWriter().println("</data>");

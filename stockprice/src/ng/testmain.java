@@ -28,12 +28,12 @@ public class testmain {
 		source = source + "<?xml version='1.0' encoding='ISO-8859-1'?>";
 		source = source + "<data>";
 		source = source + "<company>"
-				+ ng.util.getString(page, "  NAME", 144, "td", 2)
+				+ ng.util.getStringSegment(page, "  NAME", 144, "td", 2)
 				+ "</company>";
 		source = source + "<time>"
-				+ ng.util.getString(page, "  TIME", 82, "td", 2) + "</time>";
+				+ ng.util.getStringSegment(page, "  TIME", 82, "td", 2) + "</time>";
 		source = source + "<price>"
-				+ ng.util.getString(page, "  PRICE", 82, "td", 2) + "</price>";
+				+ ng.util.getStringSegment(page, "  PRICE", 82, "td", 2) + "</price>";
 		source = source + "</data>";
 
 		System.out.println(source);

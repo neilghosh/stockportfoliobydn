@@ -43,13 +43,13 @@ public class StockNameServlet extends HttpServlet {
 		while (page.indexOf("JavaScript:UpdateSymbol") > -1) {
 			resp.getWriter().println(
 					"<company><ticker>"
-							+ ng.util.getString(page,
+							+ ng.util.getStringSegment(page,
 									"JavaScript:UpdateSymbol", 25, ",", 1)
 							+ "</ticker>");
 			page = page.substring(page.indexOf("JavaScript:UpdateSymbol") + 30);
 			resp.getWriter().println(
 					"<name>"
-							+ ng.util.getString(page, "<td", 38, "</td", 0)
+							+ ng.util.getStringSegment(page, "<td", 38, "</td", 0)
 									.replaceAll("&", "&amp;")
 							+ "</name></company>");
 		}

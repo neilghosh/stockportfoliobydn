@@ -31,7 +31,7 @@
 		//out.println("Fetched URL "+util.getName(q));
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Document document = factory.newDocumentBuilder().parse(
-	                new InputSource(new StringReader(util.getName(q))));
+	                new InputSource(new StringReader(util.getNameXML(q))));
 		
 
 		/*

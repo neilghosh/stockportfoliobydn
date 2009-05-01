@@ -102,10 +102,9 @@ public class StockItem {
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
-			Document doc = factory.newDocumentBuilder()
-					.parse(
-							new InputSource(new StringReader(util
-									.getPrice(stockCode))));
+			Document doc = factory.newDocumentBuilder().parse(
+					new InputSource(new StringReader(util
+							.getPriceXML(stockCode))));
 			doc.getDocumentElement().normalize();
 
 			NodeList nodeLst = doc.getElementsByTagName("price");
