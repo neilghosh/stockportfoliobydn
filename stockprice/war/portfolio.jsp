@@ -13,17 +13,17 @@
 <html>
 <head>
 <!-- UTF-8 is the recommended encoding for your pages -->
-    <meta http-equiv="content-type" content="text/xml; charset=utf-8" />
-    <title>Portfolio</title>
+<meta http-equiv="content-type" content="text/xml; charset=utf-8" />
+<title>Portfolio</title>
 
 <!-- Loading Theme file(s) -->
-    <link rel="stylesheet" href="css/bluexp.css" />
+<link rel="stylesheet" href="css/bluexp.css" />
 
 <!-- Loading Calendar JavaScript files -->
-    <script type="text/javascript" src="js/zapatec.js"></script>
-    <script type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/zapatec.js"></script>
+<script type="text/javascript" src="js/calendar.js"></script>
 <!-- Loading language definition file -->
-    <script type="text/javascript" src="js/calendar-en.js"></script>
+<script type="text/javascript" src="js/calendar-en.js"></script>
 
 </head>
 <body>
@@ -44,21 +44,22 @@ out</a>.)</p>
 		<td align="center"><b>Qty</b></td>
 		<td align="center"><b>Price</b></td>
 		<td align="center"><b>Date</b></td>
-		
+
 	</tr>
 	<tr>
 		<td><input name="symbol" type="text" size="10"></input></td>
 		<td><input name="qty" type="text" size="4"></input></td>
 		<td><input name="price" type="text" size="10"></input></td>
-		<td><input name="date" type="text" id="date" size="10"></input><button id="trigger">...</button></td>
+		<td><input name="date" type="text" id="date" size="10"></input>
+		<button id="trigger">...</button>
+		</td>
 	</tr>
 </table>
 <br>
 
 
-<input type="button" value="Search"
-	onClick="openModal()">
-<input type="submit" value="Save" /></form>
+<input type="button" value="Company Search" onClick="openModal()"> <input
+	type="submit" value="Save" /></form>
 <%
 	} else {
 		response.sendRedirect(userService.createLoginURL(request
@@ -78,8 +79,8 @@ out</a>.)</p>
 <%
 	} else {
 %>
-<table border="1"  >
-<tr>
+<table border="1">
+	<tr>
 		<td align="center"><b>Stock</b></td>
 		<td align="center"><b>Live Price</b></td>
 		<td align="center"><b>Quantity</b></td>
@@ -90,7 +91,7 @@ out</a>.)</p>
 	<%
 		for (StockItem g : StockItems) {
 	%>
-	
+
 	<tr>
 		<td>
 		<blockquote><%=g.getStockCode()%></blockquote>
@@ -106,6 +107,12 @@ out</a>.)</p>
 
 		<td>
 		<blockquote><%=g.getInvPrice()%></blockquote>
+
+		<%
+			double brokerage = (g.getInvPrice()*g.getQuantity()*0.001385)+27.58;
+		    double effInvPrice = g.getInvPrice()+ brokerage/g.getQuantity();
+		    double effStockPrice = g.getStockPrice()- brokerage/g.getQuantity();
+		%>
 		</td>
 
 		<td>
@@ -115,7 +122,13 @@ out</a>.)</p>
 					String a = df.format((g.getStockPrice() - g.getInvPrice())
 							* g.getQuantity());
 					double AA = Double.parseDouble(a);
-		%><%=AA%></blockquote>
+		%><%=AA%> &nbsp;[<%
+			df = new DecimalFormat("0.00");
+					a = df.format((effStockPrice - effInvPrice) * g
+							.getQuantity());
+					AA = Double.parseDouble(a);
+		%><%=AA%>]</blockquote>
+
 		</td>
 
 		<td>
@@ -127,6 +140,9 @@ out</a>.)</p>
 							* 100 / (g.getQuantity() * g.getInvPrice()));
 					AA = Double.parseDouble(a);
 		%><%=AA%></blockquote>
+
+
+
 		</td>
 
 		<td>
@@ -190,7 +206,7 @@ function validate()
 }
 //-->
 </script>
-    <script type="text/javascript">//<![CDATA[
+<script type="text/javascript">//<![CDATA[
       Zapatec.Calendar.setup({
         firstDay          : 1,
         weekNumbers       : false,
