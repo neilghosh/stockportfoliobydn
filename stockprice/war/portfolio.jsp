@@ -58,8 +58,8 @@ out</a>.)</p>
 <br>
 
 
-<input type="button" value="Company Search" onClick="openModal()"> <input
-	type="submit" value="Save" /></form>
+<input type="button" value="Company Search" onClick="openModal()">
+<input type="submit" value="Save" /></form>
 <%
 	} else {
 		response.sendRedirect(userService.createLoginURL(request
