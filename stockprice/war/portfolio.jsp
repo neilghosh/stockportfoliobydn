@@ -37,7 +37,7 @@
 %>
 <p>Hello, <%=user.getNickname()%>! (You can <a
 	href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
-out</a>.)</p>
+out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 <form action="/sign" method="post" onsubmit="return validate()">
 <table>
 	<tr>

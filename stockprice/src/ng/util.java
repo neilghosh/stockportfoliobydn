@@ -32,9 +32,7 @@ public class util {
 	public static ArrayList<Transaction> consolidate(List<Transaction> StockItems)
 	{
 		//PersistenceManager pm = PMF.get().getPersistenceManager();
-		for(Transaction t: StockItems){
-		System.out.println(t.getStockCode());
-		System.out.println(t.getQuantity());}
+		
 		boolean found=false;
 		ArrayList<Transaction> consolidated=new ArrayList();
 		for(Transaction t: StockItems){
@@ -62,10 +60,7 @@ public class util {
 				consolidated.add(t);
 		}
 	//	pm.close();
-		System.out.println("**********************");
-		for(Transaction t: consolidated){
-			System.out.println(t.getStockCode());
-			System.out.println(t.getQuantity());}
+
 		return consolidated;
 		
 	}
