@@ -29,18 +29,18 @@ public class util {
 			return str.substring(baseIndex + gap1, baseIndex + gap1 + len);
 		}
 	}
-	public static ArrayList<Transaction> consolidate(List<Transaction> StockItems)
+	public static ArrayList<Holdings> consolidate(List<Holdings> StockItems)
 	{
 		//PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		boolean found=false;
-		ArrayList<Transaction> consolidated=new ArrayList();
-		for(Transaction t: StockItems){
+		ArrayList<Holdings> consolidated=new ArrayList();
+		for(Holdings t: StockItems){
 			found = false;
-			for(Transaction old: consolidated){
+			for(Holdings old: consolidated){
 				if(old.getStockCode().equals(t.getStockCode())){
-					double prevInvestment = old.getInvPrice() * old.getQuantity();
-					double currentInvestment = t.getInvPrice() * t.getQuantity();
+					double prevInvestment = old.getAvgPrice() * old.getQuantity();
+					double currentInvestment = t.getAvgPrice() * t.getQuantity();
 					double avgPrice = (prevInvestment + currentInvestment)
 							/ (old.getQuantity() + t.getQuantity());
 					DecimalFormat df = new DecimalFormat("0.00");
@@ -49,7 +49,7 @@ public class util {
 			
 					old.setAvgPrice(AA);
 				//	System.out.println("avg price:" + s.getInvPrice());
-					old.setTotalQuantity(old.getQuantity() + t.getQuantity());
+					old.setQuantity(old.getQuantity() + t.getQuantity());
 				//	System.out.println("total qty :" + s.getQuantity());
 					found = true;
 					

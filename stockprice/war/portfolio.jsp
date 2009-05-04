@@ -8,6 +8,7 @@
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="javax.jdo.Query"%>
 <%@ page import="ng.Transaction"%>
+<%@ page import="ng.Holdings"%>
 <%@ page import="ng.util"%>
 <%@ page import="ng.PMF"%>
 
@@ -70,16 +71,16 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	Query query = pm.newQuery("select from "
-			+ Transaction.class.getName() + " where user == '"
+			+ Holdings.class.getName() + " where user == '"
 			+ user.getNickname() + "'");
-	List<Transaction> Transactions = (List<Transaction>) query.execute();
-	if (Transactions.isEmpty()) {
+	List<Holdings> holdings = (List<Holdings>) query.execute();
+	if (holdings.isEmpty()) {
 %>
 <p>You have no stocks to watch.</p>
 
 <%
 	} else {
-		List<Transaction> t= util.consolidate(Transactions);
+		//List<Transaction> t= util.consolidate(Transactions);
 %>
 <table border="1">
 	<tr>
@@ -91,7 +92,7 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 		<td align="center"><b>Overall % Gain</b></td>
 	</tr>
 	<%
-		for (Transaction g : t) {
+		for (Holdings g : holdings) {
 	%>
 
 	<tr>
@@ -104,16 +105,16 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 		</td>
 
 		<td>
-		<blockquote><%=g.getTotalQuantity()%></blockquote>
+		<blockquote><%=g.getQuantity()%></blockquote>
 		</td>
 
 		<td>
 		<blockquote><%=g.getAvgPrice() %></blockquote>
 
 		<%
-			double brokerage = (g.getInvPrice()*g.getQuantity()*0.001385)+27.58;
-		    double effInvPrice = g.getInvPrice()+ brokerage/g.getQuantity();
-		    double effStockPrice = g.getStockPrice()- brokerage/g.getQuantity();
+//			double brokerage = (g.getInvPrice()*g.getQuantity()*0.001385)+27.58;
+	//	    double effInvPrice = g.getInvPrice()+ brokerage/g.getQuantity();
+		//    double effStockPrice = g.getStockPrice()- brokerage/g.getQuantity();
 		%>
 		</td>
 
@@ -121,14 +122,14 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 		<blockquote>
 		<%
 			DecimalFormat df = new DecimalFormat("0.00");
-					String a = df.format((g.getStockPrice() - g.getInvPrice())
+					String a = df.format((g.getStockPrice() - g.getAvgPrice())
 							* g.getQuantity());
 					double AA = Double.parseDouble(a);
 		%><%=AA%> &nbsp;[<%
-			df = new DecimalFormat("0.00");
-					a = df.format((effStockPrice - effInvPrice) * g
-							.getQuantity());
-					AA = Double.parseDouble(a);
+		//	df = new DecimalFormat("0.00");
+			//		a = df.format((effStockPrice - effInvPrice) * g
+				//			.getQuantity());
+					//AA = Double.parseDouble(a);
 		%><%=AA%>]</blockquote>
 
 		</td>
@@ -137,9 +138,9 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 		<blockquote>
 		<%
 			df = new DecimalFormat("0.00");
-					a = df.format(((g.getStockPrice() - g.getInvPrice()) * g
+					a = df.format(((g.getStockPrice() - g.getAvgPrice()) * g
 							.getQuantity())
-							* 100 / (g.getQuantity() * g.getInvPrice()));
+							* 100 / (g.getQuantity() * g.getAvgPrice()));
 					AA = Double.parseDouble(a);
 		%><%=AA%></blockquote>
 

@@ -131,33 +131,6 @@ public class Transaction {
 
 	}
 
-	public double getStockPrice() {
-		double price = 0.0d;
-		String PriceStr = "";
-		try {
 
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
-			Document doc = factory.newDocumentBuilder().parse(
-					new InputSource(new StringReader(util
-							.getPriceXML(stockCode))));
-			doc.getDocumentElement().normalize();
-
-			NodeList nodeLst = doc.getElementsByTagName("price");
-			Element priceElement = (Element) nodeLst.item(0);
-			NodeList prc = priceElement.getChildNodes();
-			// price = Double.parseDouble(((prc.item(0)).getNodeValue()));
-
-			NumberFormat nf = NumberFormat.getInstance();
-			price = nf.parse(((prc.item(0)).getNodeValue())).doubleValue();
-
-		} catch (java.text.ParseException ex) {
-			System.out.print(ex.getMessage());
-		} catch (Exception e) {
-			System.out.print(e);
-		}
-
-		return price;
-	}
 
 }
