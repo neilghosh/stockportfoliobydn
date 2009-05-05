@@ -1,9 +1,12 @@
 package ng;
 
+
 import java.io.StringReader;
 import java.text.NumberFormat;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Holdings {
 
 	@PrimaryKey
