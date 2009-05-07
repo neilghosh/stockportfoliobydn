@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import ng.Holdings;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -45,9 +46,10 @@ public class EnterStockSymbolServlet extends HttpServlet {
 					+ Transaction.class.getName() + " where id == " + id);
 			List<Transaction> StockItems = (List<Transaction>) query.execute();
 			Transaction s = (StockItems.get(0));
-			Transaction greeting = new Transaction(user.getNickname(), s.getStockCode(),
-					s.getDate(), s.getQuantity(), s.getInvPrice(), "Sell");
+			//Transaction greeting = new Transaction(user.getNickname(), s.getStockCode(),
+				//	s.getDate(), s.getQuantity(), s.getInvPrice(), "Sell");
 			pm.deletePersistent(s);
+			resp.sendRedirect("/TransactionHistory.jsp");
 		} else {
 			Date date = new Date(req.getParameter("date"));
 			int quantity = Integer.parseInt(req.getParameter("qty"));
@@ -59,12 +61,19 @@ public class EnterStockSymbolServlet extends HttpServlet {
 			List<Holdings> StockItems = (List<Holdings>) query.execute();
 			Transaction greeting = new Transaction(user.getNickname(), symbol,
 						date, quantity, invPrice, "Buy");
-			if(StockItems != null){
+			Holdings newStock=null;
+			if(StockItems.size()>0){
 				Holdings s = StockItems.get(0);
 				invPrice = (s.getAvgPrice()*s.getQuantity()+invPrice*quantity)/(s.getQuantity()+quantity);
 				quantity = s.getQuantity()+quantity;
+				s.setAvgPrice(invPrice);
+				s.setQuantity(quantity);
 			}
-			Holdings newStock = new Holdings(user.getNickname(), symbol, quantity, invPrice);
+			else{
+				 newStock = new Holdings(user.getNickname(), symbol, quantity, invPrice);
+		
+
+			}
 				log
 						.info(user.getEmail() + " Created " + symbol + " on "
 								+ date);
@@ -76,9 +85,8 @@ public class EnterStockSymbolServlet extends HttpServlet {
 				}
 			 
 			// PersistenceManager pm = PMF.get().getPersistenceManager();
-
+				resp.sendRedirect("/portfolio.jsp");
 		}
-		resp.sendRedirect("/portfolio.jsp");
 	}
 	
 	

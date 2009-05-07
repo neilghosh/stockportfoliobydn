@@ -148,14 +148,7 @@ out</a> or view <a href="TransactionHistory.jsp"> Transaction History</a>.)</p>
 
 		</td>
 
-		<td>
-		<form action="/sign" method="post">
-		<div><input name="symbol" type="hidden"
-			value="<%=g.getStockCode()%>"></input> <input name="action"
-			type="hidden" value="delete"></input> <input name="id" type="hidden"
-			value="<%=g.getId()%>"></input> <input type="submit" value="Delete" /></div>
-		</form>
-		</td>
+		
 	</tr>
 	<%
 		}
